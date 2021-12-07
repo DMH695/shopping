@@ -1,45 +1,17 @@
 package com.example.shopping.interceptor;
 
-import com.example.shopping.entity.User;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-public class LoginInterceptor implements HandlerInterceptor {
+//未部署
+class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HttpSession session = request.getSession();
-        String contextPath=session.getServletContext().getContextPath();
-        //需要拦截的路径
-        String[] requireAuthPages = new String[]{
-                "index",
-        };
-
-        String uri = request.getRequestURI();
-
-        uri = StringUtils.remove(uri, contextPath+"/");
-        String page = uri;
-
-        if(begingWith(page, requireAuthPages)){
-            User user = (User) session.getAttribute("user");
-            if(user==null) {
-                response.sendRedirect("login");
-                return false;
-            }
+        //在请求域中获取session进而获取user
+        if(request.getSession().getAttribute("user") == null){
+            return false;//表示不往下执行
         }
         return true;
-    }
-    private boolean begingWith(String page, String[] requiredAuthPages) {
-        boolean result = false;
-        for (String requiredAuthPage : requiredAuthPages) {
-            if(StringUtils.startsWith(page, requiredAuthPage)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
     }
 }

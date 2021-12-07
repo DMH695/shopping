@@ -16,10 +16,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User save(String username, String password) {
-        userDao.save(username,password);
-        return new User(username,password);
+    public User save(String username, String password, String address, String telephone) {
+        User user = new User(username,password,address,telephone);
+        userDao.save(username, password,address,telephone);
+        return user;
     }
+
 
     @Override
     public JSONObject findUser(int uid) {

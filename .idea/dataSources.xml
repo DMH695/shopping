@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/shopping</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="shopping@47.97.207.96" uuid="d4fef60a-3ba2-4285-aab1-7859b28cf9f7">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://47.97.207.96:3306/shopping</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

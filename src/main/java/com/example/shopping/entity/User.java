@@ -17,9 +17,11 @@ public class User {
         this.username = username;
         this.password = password;
     }
-    public User( String username, String password) {
+    public User( String username, String password,String address,String telephone) {
         this.username = username;
         this.password = password;
+        this.address = address;
+        this.telephone = telephone;
     }
 
 
