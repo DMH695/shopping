@@ -1,13 +1,18 @@
 package com.example.shopping.Controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.shopping.service.GoodsService;
 import com.example.shopping.service.TypeService;
 import com.example.shopping.utils.ResultBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sun.misc.BASE64Encoder;
+
+import java.io.*;
 
 @RestController
 @RequestMapping("/login/index")
@@ -31,7 +36,7 @@ public class GoodsApi {
      * @return
      */
     @RequestMapping(value = "/goods",method = RequestMethod.GET)
-    public Object getByTypename(@RequestParam String typename){
+    public Object getByTypename(@RequestParam String typename) throws IOException {
         if (typename == null){
             return new ResultBody<>(false,500,"error type");
         }
@@ -42,7 +47,7 @@ public class GoodsApi {
         }
     }
     @RequestMapping(value = "/goods/detail",method = RequestMethod.GET)
-    public Object getById(@RequestParam int id){
+    public Object getById(@RequestParam int id) throws IOException {
         if(id<=0){
             return new ResultBody<>(false,500,"error id");
         }

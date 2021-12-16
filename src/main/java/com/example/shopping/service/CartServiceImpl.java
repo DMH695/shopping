@@ -3,9 +3,15 @@ package com.example.shopping.service;
 import com.alibaba.fastjson.JSONObject;
 import com.example.shopping.dao.CartsDao;
 import com.example.shopping.entity.Carts;
+import com.example.shopping.utils.ImageTools;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,13 +58,16 @@ public class CartServiceImpl implements CartService{
         return cartsDao.getPictureById(id);
     }
 
+    @SneakyThrows
     @Override
-    public List<JSONObject> findAll() {
+    public List<JSONObject> findAll()  {
         List<JSONObject> res = new ArrayList<>();
         for(Carts cart : cartsDao.findAll()){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("name",cart.getName());
-            jsonObject.put("picture",cart.getPicture());
+            BufferedImage bufferedImage = ImageIO.read(new File(cart.getPicture()));
+            String imgBase64 = ImageTools.imgToBase64(bufferedImage);
+            jsonObject.put("picture",imgBase64);
             jsonObject.put("count",cart.getCount());
             jsonObject.put("price",cart.getPrice());
             res.add(jsonObject);
@@ -89,6 +98,7 @@ public class CartServiceImpl implements CartService{
         cartsDao.deleteCart(uid,gid);
     }
 
+    @SneakyThrows
     @Override
     public List<JSONObject> findOrder(int uid, List<Integer> gids) {
         List<JSONObject> res = new ArrayList<>();
@@ -96,7 +106,9 @@ public class CartServiceImpl implements CartService{
             JSONObject jsonObject = new JSONObject();
             Carts carts = cartsDao.findOrder(uid,gid);
             jsonObject.put("name",carts.getName());
-            jsonObject.put("picture",carts.getPicture());
+            BufferedImage bufferedImage = ImageIO.read(new File(carts.getPicture()));
+            String imgBase64 = ImageTools.imgToBase64(bufferedImage);
+            jsonObject.put("picture",imgBase64);
             jsonObject.put("count",carts.getCount());
             jsonObject.put("price",carts.getPrice());
             res.add(jsonObject);
