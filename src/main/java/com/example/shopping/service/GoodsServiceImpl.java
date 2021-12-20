@@ -21,7 +21,6 @@ public class GoodsServiceImpl implements GoodsService{
         List<Goods> res =goodsDao.getByTypename(typename);
         for(Goods goods : res){
             //转化为base64编码
-
             BufferedImage bufferedImage = ImageIO.read(new File(goods.getPicture()));
             String imgBase64 = ImageTools.imgToBase64(bufferedImage);
             goods.setPicture(imgBase64);
