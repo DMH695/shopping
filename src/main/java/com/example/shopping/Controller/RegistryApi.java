@@ -23,10 +23,11 @@ public class RegistryApi {
     @Autowired
     UserService userService;
     @ResponseBody
-    @PostMapping("registry/submit")
-    public Object codeTest(@RequestBody JSONObject data, @RequestParam String code, HttpServletRequest request, HttpServletResponse response){
+    @PostMapping("/registry/submit")
+    public Object codeTest(@RequestBody JSONObject data, HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
-        if(session.getAttribute("RANDOMKEY").toString().equals(code)){
+        //String code = data.getString("code");
+        //if(session.getAttribute("RANDOMKEY").toString().equals(code)){
             String username = data.getString("username");
             String password = data.getString("password");
             String address = data.getString("address");
@@ -40,9 +41,9 @@ public class RegistryApi {
             else {
                 return new ResultBody<>(false,501,"failed save");
             }
-        }else {
-            return new ResultBody<>(false,502,"error validateCode");
-        }
+       //}else {
+         //   return new ResultBody<>(false,502,"error validateCode");
+        //}
     }
 }
 

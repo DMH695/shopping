@@ -6,6 +6,9 @@ import com.example.shopping.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
@@ -32,4 +35,36 @@ public class UserServiceImpl implements UserService{
         res.put("telephone",user.getTelephone());
         return res;
     }
+
+    @Override
+    public List<String> getPermissionsByUsername(String username) {
+        String roles = userDao.getRoles(username);
+        List<String> roleList = StringToList(roles,"roles");
+        List<String> permissions = new ArrayList<>();
+        for(String role : roleList){
+            for(String permission : StringToList(userDao.getPermissionsByRoleName(role),"permissions")){
+                permissions.add(permission);
+            }
+        }
+        return permissions;
+    }
+
+    @Override
+    public List<String> getRoleByUsername(String username) {
+        String roles = userDao.getRoles(username);
+        return StringToList(roles,"roles");
+    }
+
+    @Override
+    public User getUser(String username) {
+        return userDao.getUser(username);
+    }
+
+
+    public List<String> StringToList(String string,String type){
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(string);
+        List<String> list = (List<String>) jsonObject.get(type);
+        return list;
+    }
 }
+

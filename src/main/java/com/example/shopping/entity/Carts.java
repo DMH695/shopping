@@ -10,4 +10,6 @@ public class Carts {
     private String picture;
     private int count;
     private double price;
+    private String standard;
+    private boolean checked;
 }

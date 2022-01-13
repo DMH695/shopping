@@ -13,4 +13,5 @@ public class Goods {
     private String introduce;
     private double price;
     private String picture;
+    private String standard;
 }

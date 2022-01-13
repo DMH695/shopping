@@ -3,13 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.shopping.dao.CartsDao">
-    <insert id="insertCart">INSERT INTO carts VALUES (#{uid},#{gid},#{name},#{count},#{price})</insert>
+    <insert id="insertCart">INSERT INTO carts(uid,gid,name,picture,count,price,standard) VALUES (#{uid},#{gid},#{name},#{picture},#{count},#{price},#{standard})</insert>
     <select id="getPriceById" resultType="double">SELECT price FROM goods WHERE id=#{id}</select>
-   <update id="update">UPDATE carts SET count = count + #{count} WHERE uid=#{uid} AND gid=#{gid}</update>
+   <update id="update">UPDATE carts SET count = count + #{count},standard=#{standard} WHERE uid=#{uid} AND gid=#{gid}</update>
     <select id="findAll" resultType="Carts">SELECT * FROM carts</select>
     <select id="getNameById" resultType="String">SELECT name FROM goods WHERE id=#{id}</select>
     <select id="getPictureById" resultType="String">SELECT picture FROM goods WHERE id=#{id}</select>
-    <update id="updateCount" >UPDATE carts SET count=#{count} WHERE uid=#{uid} AND gid={gid}</update>
+    <update id="updateCount" >UPDATE carts SET count=#{count} WHERE uid=#{uid} AND gid=#{gid}</update>
     <select id="findCountAndPrice" resultType="Carts">SELECT * FROM carts WHERE uid=#{uid} AND gid=#{gid}</select>
     <delete id="deleteCart">DELETE FROM carts WHERE uid=#{uid} AND gid=#{gid}</delete>
     <select id="findOrder" resultType="Carts">SELECT * FROM carts WHERE uid=#{uid} AND gid=#{gid}</select>

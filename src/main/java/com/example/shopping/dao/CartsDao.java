@@ -7,9 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface CartsDao extends BaseDao<Carts>{
-    void insertCart(int uid,int gid,String name,int count,double price);
+    void insertCart(int uid,int gid,String name,String picture,int count,double price,String standard);
     double getPriceById(int id);
-    void update(int uid,int gid,int count);
+    void update(int uid,int gid,int count,String standard);
     String getNameById(int id);
     String getPictureById(int id);
     void updateCount(int uid,int gid,int count);

@@ -1,5 +1,6 @@
 package com.example.shopping.Controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.shopping.entity.User;
 import com.example.shopping.service.UserService;
 import com.example.shopping.utils.ResultBody;
@@ -23,12 +24,18 @@ public class LoginApi {
         password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
         User user = userService.checkUser(username,password);
         if(user != null){
+            JSONObject res = new JSONObject();
+            res.put("username",username);
             user.setPassword(null);
             session.setAttribute("user",user);
             session.setAttribute("uid",user.getId());
-            return new ResultBody<>(true,200,null);
+            return new ResultBody<>(true,200,res);
         }else{
             return new ResultBody<>(false,501,"unknown user");
         }
+    }
+    @RequestMapping(value = "/permission",method = RequestMethod.GET)
+    public Object getPermissions(@RequestParam String username){
+        return new ResultBody<>(true,200,userService.getPermissionsByUsername(username));
     }
 }

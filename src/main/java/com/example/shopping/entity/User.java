@@ -3,6 +3,8 @@ package com.example.shopping.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class User {
 
@@ -11,6 +13,7 @@ public class User {
     private String password;
     private String address;
     private String telephone;
+    private String roles;
 
     public User(int id, String username, String password) {
         this.id = id;

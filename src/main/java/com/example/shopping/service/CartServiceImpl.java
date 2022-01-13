@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CartServiceImpl implements CartService{
+public class CartServiceImpl implements CartService {
     @Autowired
     CartsDao cartsDao;
-    @Override
-    public boolean insertCart(int uid, int gid,String name,String picture, int count, double price) {
 
-        cartsDao.insertCart(uid,gid,name,count,price);
+    @Override
+    public boolean insertCart(int uid, int gid, String name, String picture, int count, double price, String standard) {
+
+        cartsDao.insertCart(uid, gid, name, picture, count, price, standard);
         return true;
     }
 
@@ -34,18 +35,18 @@ public class CartServiceImpl implements CartService{
     @Override
     public List<JSONObject> findId() {
         List<JSONObject> res = new ArrayList<>();
-        for(Carts cart:cartsDao.findAll()){
+        for (Carts cart : cartsDao.findAll()) {
             JSONObject ids = new JSONObject();
-            ids.put("uid",cart.getUid());
-            ids.put("gid",cart.getGid());
+            ids.put("uid", cart.getUid());
+            ids.put("gid", cart.getGid());
             res.add(ids);
         }
         return res;
     }
 
     @Override
-    public void update(int uid, int id, int count) {
-        cartsDao.update(uid,id,count);
+    public void update(int uid, int id, int count, String standard) {
+        cartsDao.update(uid, id, count, standard);
     }
 
     @Override
@@ -60,16 +61,17 @@ public class CartServiceImpl implements CartService{
 
     @SneakyThrows
     @Override
-    public List<JSONObject> findAll()  {
+    public List<JSONObject> findAll() {
         List<JSONObject> res = new ArrayList<>();
-        for(Carts cart : cartsDao.findAll()){
+        for (Carts cart : cartsDao.findAll()) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("name",cart.getName());
-            BufferedImage bufferedImage = ImageIO.read(new File(cart.getPicture()));
-            String imgBase64 = ImageTools.imgToBase64(bufferedImage);
-            jsonObject.put("picture",imgBase64);
-            jsonObject.put("count",cart.getCount());
-            jsonObject.put("price",cart.getPrice());
+            jsonObject.put("gid",cart.getGid());
+            jsonObject.put("name", cart.getName());
+            jsonObject.put("picture", cart.getPicture());
+            jsonObject.put("count", cart.getCount());
+            jsonObject.put("price", cart.getPrice());
+            jsonObject.put("standard", cart.getStandard());
+            jsonObject.put("checked",cart.isChecked());
             res.add(jsonObject);
         }
         return res;
@@ -77,17 +79,17 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void updateCount(int uid, int gid, int count) {
-        cartsDao.updateCount(uid,gid,count);
+        cartsDao.updateCount(uid, gid, count);
     }
 
 
     @Override
-    public List<JSONObject> findCountAndPrice(int uid,List<Integer> gids) {
+    public List<JSONObject> findCountAndPrice(int uid, List<Integer> gids) {
         List<JSONObject> res = new ArrayList<>();
-        for(Integer gid : gids){
+        for (Integer gid : gids) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("count",cartsDao.findCountAndPrice(uid,gid).getCount());
-            jsonObject.put("price",cartsDao.findCountAndPrice(uid,gid).getPrice());
+            jsonObject.put("count", cartsDao.findCountAndPrice(uid, gid).getCount());
+            jsonObject.put("price", cartsDao.findCountAndPrice(uid, gid).getPrice());
             res.add(jsonObject);
         }
         return res;
@@ -95,22 +97,21 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void deleteCart(int uid, int gid) {
-        cartsDao.deleteCart(uid,gid);
+        cartsDao.deleteCart(uid, gid);
     }
 
     @SneakyThrows
     @Override
     public List<JSONObject> findOrder(int uid, List<Integer> gids) {
         List<JSONObject> res = new ArrayList<>();
-        for(Integer gid : gids){
+        for (Integer gid : gids) {
             JSONObject jsonObject = new JSONObject();
-            Carts carts = cartsDao.findOrder(uid,gid);
-            jsonObject.put("name",carts.getName());
-            BufferedImage bufferedImage = ImageIO.read(new File(carts.getPicture()));
-            String imgBase64 = ImageTools.imgToBase64(bufferedImage);
-            jsonObject.put("picture",imgBase64);
-            jsonObject.put("count",carts.getCount());
-            jsonObject.put("price",carts.getPrice());
+            Carts carts = cartsDao.findOrder(uid, gid);
+            jsonObject.put("name", carts.getName());
+            jsonObject.put("picture", carts.getPicture());
+            jsonObject.put("count", carts.getCount());
+            jsonObject.put("price", carts.getPrice());
+            jsonObject.put("standard", carts.getStandard());
             res.add(jsonObject);
         }
         return res;

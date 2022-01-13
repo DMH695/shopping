@@ -6,4 +6,7 @@
     <select id="getUserByUsernameAndPassword" resultType="User">SELECT * FROM user WHERE username=#{username} AND password=#{password}</select>
     <insert id="save" >INSERT INTO user(username,password,address,telephone) VALUES (#{username},#{password},#{address},#{telephone})</insert>
     <select id="findUser" resultType="User">SELECT * FROM user WHERE id=#{uid}</select>
+    <select id="getRoles" resultType="String">SELECT role FROM user WHERE username=#{usename}</select>
+    <select id="getPermissionsByRoleName" resultType="String">SELECT permissions FROM role WHERE roleName=#{roleName}</select>
+    <select id="getUser" resultType="User">SELECT * FROM user WHERE username=#{username}</select>
 </mapper>
