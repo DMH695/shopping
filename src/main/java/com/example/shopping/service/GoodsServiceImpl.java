@@ -51,4 +51,9 @@ public class GoodsServiceImpl implements GoodsService{
         jsonObject.put("standard",JSON.parseArray(goods.getStandard()));
         return jsonObject;
     }
+
+    @Override
+    public Goods getGoodsByCondition(String word) {
+        return goodsDao.getGoodsByCondition(word);
+    }
 }

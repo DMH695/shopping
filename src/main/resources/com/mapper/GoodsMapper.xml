@@ -5,4 +5,19 @@
 <mapper namespace="com.example.shopping.dao.GoodsDao">
     <select id="getByTypename" resultType="Goods">SELECT * FROM goods WHERE type=#{typename}</select>
     <select id="getById" resultType="Goods">SELECT * FROM goods WHERE id=#{id}</select>
+    <select id="getGoodsByCondition" resultType="Goods" parameterType="String">SELECT * FROM goods
+                                <where>
+                                    <choose>
+                                        <when test="word != null">
+                                           and name like '%${word}%'
+                                        </when>
+                                        <when test="word != null">
+                                            and type like '%${word}%'
+                                        </when>
+                                        <otherwise>
+                                            and id = 1
+                                        </otherwise>
+                                    </choose>
+                                </where>
+    </select>
 </mapper>

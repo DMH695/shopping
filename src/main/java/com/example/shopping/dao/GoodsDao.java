@@ -9,4 +9,5 @@ import java.util.List;
 public interface GoodsDao extends BaseDao<Goods>{
     List<Goods> getByTypename(String typename);
     Goods getById(int id);
+    Goods getGoodsByCondition(String word);
 }

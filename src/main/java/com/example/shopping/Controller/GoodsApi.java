@@ -57,4 +57,13 @@ public class GoodsApi {
             return new ResultBody<>(true,200,goodsService.getById(id));
         }
     }
+    @RequestMapping(value = "/search",method = RequestMethod.GET)
+    public Object getGoodsByCondition(@RequestParam String word){
+        if(word != null){
+            return new ResultBody<>(true,200,goodsService.getGoodsByCondition(word));
+        }
+        else {
+            return new ResultBody<>(true,200,"no");
+        }
+    }
 }

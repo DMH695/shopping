@@ -9,4 +9,5 @@ import java.util.List;
 public interface GoodsService {
     List<JSONObject> getByTypename(String typename) throws IOException;
     JSONObject getById(int id) throws IOException;
+    Goods getGoodsByCondition(String word);
 }
