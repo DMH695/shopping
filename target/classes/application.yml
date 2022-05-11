@@ -1,6 +1,8 @@
+server:
+  port: 8080
 spring:
   datasource:
-    url: jdbc:mysql://localhost/shopping?characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://192.168.110.135:3306/shopping?characterEncoding=UTF-8&useSSL=false
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver

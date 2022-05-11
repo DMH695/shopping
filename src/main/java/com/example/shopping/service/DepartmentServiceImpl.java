@@ -1,5 +1,6 @@
 package com.example.shopping.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.shopping.dao.DepartmentDao;
 import com.example.shopping.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;

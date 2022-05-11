@@ -14,6 +14,7 @@ public class User {
     private String address;
     private String telephone;
     private String roles;
+    private String permissions;
 
     public User(int id, String username, String password) {
         this.id = id;
